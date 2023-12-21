@@ -6,14 +6,13 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.ForeignKey('category.id'))
     author_id = db.Column(db.ForeignKey('author.id'))
-    language_id = db.Column(db.ForeignKey('language.id'))
+    language = db.Column(db.String(50))
     title = db.Column(db.String(200))
-    publication_date = db.Column(db.String(200))
+    publication_date = db.Column(db.Date)
     available = db.Column(db.Boolean)
 
     category = db.relationship('Category', back_populates='books')
     author = db.relationship('Author', back_populates='books')
-    language = db.relationship('Language', back_populates='book')
 
 
 # Category Model
@@ -28,16 +27,8 @@ class Category(db.Model):
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200))
-    gender = db.Column(db.String(30))
+    gender = db.Column(db.String(200))
     date_of_birth = db.Column(db.Date)
-    nationality = db.Column(db.String(100))
+    nationality = db.Column(db.String(50))
 
     books = db.relationship('Book', back_populates='author')
-
-
-# Language Model
-class Language(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
-
-    book = db.relationship('Book', back_populates='language')
